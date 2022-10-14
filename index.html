@@ -6,31 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculator</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </head>
 <body>
   <div id="calculator">
-    <div id="screen">0</div>
+    <div id="screen">
+      <div id="display-value"></div>
+    </div>
     <div id="keys-container">
       <div id="big-keys-container">
-        <button class="big-key" id="clear">Clear</button>
-        <button class="big-key id="backspace">Backspace</button>
+        <button class="key big-key" id="clear">Clear</button>
+        <button class="key big-key" id="backspace">Backspace</button>
       </div>
       <div id="small-keys-container">
-        <button class="key number-key" id="seven">7</button>
-        <button class="key number-key">8</button>
-        <button class="key number-key">9</button>
+        <button class="key number-key" name="7" id="7">7</button>
+        <button class="key number-key" name="8" id="8">8</button>
+        <button class="key number-key" name="9" id="9">9</button>
         <button class="key operator-key"> ÷ </button>
-        <button class="key number-key">4</button>
-        <button class="key number-key">5</button>
-        <button class="key number-key">6</button>
+        <button class="key number-key" id="4">4</button>
+        <button class="key number-key" id="5">5</button>
+        <button class="key number-key" id="6">6</button>
         <button class="key operator-key"> × </button>
-        <button class="key number-key">1</button>
-        <button class="key number-key">2</button>
-        <button class="key number-key">3</button>
+        <button class="key number-key" id="1">1</button>
+        <button class="key number-key" id="2">2</button>
+        <button class="key number-key" id="3">3</button>
         <button class="key operator-key"> - </button>
         <button class="key operator-key dark"> . </button>
-        <button class="key number-key">0</button>
+        <button class="key number-key" id="0">0</button>
         <button class="key operator-key dark"> = </button>
         <button class="key operator-key"> + </button>
       </div>
