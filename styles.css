@@ -82,7 +82,7 @@ body {
   padding: 0;
 }
 
-.big-key, .number-key, .operator-key {
+.key {
   text-align: center;
   vertical-align: middle;
   margin: 0;
