@@ -76,7 +76,8 @@ function populateDisplay(str) {
 function deleteFromDisplay() {
   if (displayValue.textContent.length === 1) {
     displayValue.textContent = '0';
-  } else if (displayValue.textContent.length > 1 && operator && displayValue.textContent.indexOf(operator) === displayValue.textContent.length - 1) {
+  } else if (displayValue.textContent.length > 1 && operator
+            && displayValue.textContent.indexOf(operator, input[0].length) === displayValue.textContent.length - 1) {
     operator = '';
     displayValue.textContent = displayValue.textContent.slice(0, -1);
   } else {
@@ -110,7 +111,7 @@ function pressPoint() {
       populateDisplay('.');
     } else return;
   } else if (input.length === 1 && operator) {
-      let operatorIndex = displayValue.textContent.indexOf(operator);
+      let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
       let operand = displayValue.textContent.slice(operatorIndex + 1);
       if (!operand.includes('.')) {
         populateDisplay('.');
@@ -140,7 +141,7 @@ for (key of operatorKeys) {
         } else return;
       }
       else if (operator) {
-        let operatorIndex = displayValue.textContent.indexOf(operator);
+        let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
         if (operatorIndex === displayValue.textContent.length - 1) {
           deleteFromDisplay();
           operator = e.target.textContent;
@@ -171,8 +172,6 @@ const equalsKey = document.querySelector('.equals-key');
 equalsKey.addEventListener('click', () => pressEquals());
 
 
-populateDisplay('0');
-
 const numberCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 const operatorCharacters = ['+', '-', '*', '/'];
 const equalsCharacter = '=';
@@ -181,7 +180,7 @@ const pointCharacter = '.';
 function pressOperator(str) {
   if (str === '/') str = '÷';
   else if (str === '*') str = '×';
-
+  
   if (input.length === 0 && displayValue.textContent === '0') {
     if (str === '-') {
       populateDisplay('-');
@@ -197,7 +196,7 @@ function pressOperator(str) {
       } else return;
     }
     else if (operator) {
-      let operatorIndex = displayValue.textContent.indexOf(operator);
+      let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
       if (operatorIndex === displayValue.textContent.length - 1) {
         deleteFromDisplay();
         operator = str;
@@ -217,7 +216,6 @@ function pressOperator(str) {
 }
 
 
-// TODO: Add keyboard support
 function keyboardInput(e) {
   if (e.key === equalsCharacter || e.code === 'Enter') {
     pressEquals();
@@ -237,3 +235,5 @@ function keyboardInput(e) {
 }
 
 window.addEventListener('keydown', (e) => keyboardInput(e));
+
+populateDisplay('0');
