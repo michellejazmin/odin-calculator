@@ -131,26 +131,29 @@ for (key of operatorKeys) {
       operator = e.target.textContent;
       populateDisplay(e.target.textContent);
     } else if (input.length === 1) {
-        if (operator) {
-          let operatorIndex = displayValue.textContent.indexOf(operator);
-          if (operatorIndex === displayValue.textContent.length - 1) {
-            deleteFromDisplay();
-            operator = e.target.textContent;
-            populateDisplay(operator);
-          } else if (operatorIndex < displayValue.textContent.length - 1) {
-            input[1] = displayValue.textContent.slice(operatorIndex + 1);
-            operate(...input, operator);
-            input[0] = displayValue.textContent;
-            operator = e.target.textContent;
-            populateDisplay(operator);
-          }
-        } else {
+      if ((operator === '÷' || operator === '×') && e.target.id === 'minus-key') {
+        if (displayValue.textContent[displayValue.textContent.length -1] !== '-') {
+          populateDisplay('-');
+        } else return;
+      }
+      else if (operator) {
+        let operatorIndex = displayValue.textContent.indexOf(operator);
+        if (operatorIndex === displayValue.textContent.length - 1) {
+          deleteFromDisplay();
+          operator = e.target.textContent;
+          populateDisplay(operator);
+        } else if (operatorIndex < displayValue.textContent.length - 1) {
+          input[1] = displayValue.textContent.slice(operatorIndex + 1);
+          operate(...input, operator);
+          input[0] = displayValue.textContent;
           operator = e.target.textContent;
           populateDisplay(operator);
         }
-    }/*  else {
-      operate(...input, operator);
-    } */
+      } else {
+        operator = e.target.textContent;
+        populateDisplay(operator);
+      }
+    }
   });
 }
 
@@ -166,3 +169,8 @@ equalsKey.addEventListener('click', () => {
 populateDisplay('0');
 
 // TODO: Add keyboard support
+function keyboardInput(e) {
+  // code
+}
+
+window.addEventListener('keydown', (e) => keyboardInput());
