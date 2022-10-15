@@ -46,6 +46,11 @@ function operate(num1, num2, sign) {
     
   if (!Number.isInteger(result)) {
     result = result.toFixed(3);
+    let strResult = result.toString();
+    while (strResult[strResult.length - 1] === '0') {
+      strResult.slice(0, -1);
+    }
+    result = Number(strResult);
   }
   
   displayValue.textContent = result;
@@ -67,8 +72,11 @@ function populateDisplay(str) {
 function deleteFromDisplay() {
   if (displayValue.textContent.length === 1) {
     displayValue.textContent = '0';
+  } else if (displayValue.textContent.length > 1 && operator && displayValue.textContent.indexOf(operator) === displayValue.textContent.length - 1) {
+    operator = '';
+    displayValue.textContent = displayValue.textContent.slice(0, -1);
   } else {
-  displayValue.textContent = displayValue.textContent.slice(0, -1);
+    displayValue.textContent = displayValue.textContent.slice(0, -1);
   }
 }
 
@@ -107,13 +115,25 @@ for (key of operatorKeys) {
       populateDisplay(e.target.textContent);
     } else if (input.length === 1) {
         if (operator) {
-          deleteFromDisplay();
-          operator = e.target.textContent;
-          populateDisplay(e.target.textContent);
+          let operatorIndex = displayValue.textContent.indexOf(operator);
+          if (operatorIndex === displayValue.textContent.length - 1) {
+            deleteFromDisplay();
+            operator = e.target.textContent;
+            populateDisplay(operator);
+          } else if (operatorIndex < displayValue.textContent.length - 1) {
+            input[1] = displayValue.textContent.slice(operatorIndex + 1);
+            operate(...input, operator);
+            input[0] = displayValue.textContent;
+            operator = e.target.textContent;
+            populateDisplay(operator);
+          }
         } else {
           operator = e.target.textContent;
+          populateDisplay(operator);
         }
-    } else operate(...input, operator);    
+    }/*  else {
+      operate(...input, operator);
+    } */
   });
 }
 
@@ -127,3 +147,5 @@ equalsKey.addEventListener('click', () => {
 
 
 populateDisplay('0');
+
+// TODO: Add keyboard support
