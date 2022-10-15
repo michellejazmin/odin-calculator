@@ -132,7 +132,7 @@ for (key of operatorKeys) {
       populateDisplay(e.target.textContent);
     } else if (input.length === 1) {
       if ((operator === '÷' || operator === '×') && e.target.id === 'minus-key') {
-        if (displayValue.textContent[displayValue.textContent.length -1] !== '-') {
+        if (displayValue.textContent[displayValue.textContent.length - 1] !== '-') {
           populateDisplay('-');
         } else return;
       }
@@ -160,7 +160,7 @@ for (key of operatorKeys) {
 const equalsKey = document.querySelector('.equals-key');
 equalsKey.addEventListener('click', () => {
   if (input.length === 0 || operator === '') return;
-  let operatorIndex = displayValue.textContent.indexOf(operator);
+  let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
   input[1] = displayValue.textContent.slice(operatorIndex + 1);
   operate(...input, operator);
 });
