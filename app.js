@@ -102,8 +102,7 @@ for (key of numberKeys) {
   key.addEventListener('click', (e) => populateDisplay(e.target.id));
 }
 
-const pointKey = document.querySelector('.point-key');
-pointKey.addEventListener('click', (e) => {
+function pressPoint() {
   if (finished) {
     populateDisplay('0.');
   } else if (input.length === 0 || (input.length === 1 && !operator)) {
@@ -117,7 +116,11 @@ pointKey.addEventListener('click', (e) => {
         populateDisplay('.');
       } else return;
   }
-});
+}
+
+const pointKey = document.querySelector('.point-key');
+pointKey.addEventListener('click', () => pressPoint());
+
 
 const operatorKeys = document.getElementsByClassName('operator-key');
 for (key of operatorKeys) {
@@ -157,20 +160,80 @@ for (key of operatorKeys) {
   });
 }
 
-const equalsKey = document.querySelector('.equals-key');
-equalsKey.addEventListener('click', () => {
+function pressEquals() {
   if (input.length === 0 || operator === '') return;
   let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
   input[1] = displayValue.textContent.slice(operatorIndex + 1);
   operate(...input, operator);
-});
+}
+
+const equalsKey = document.querySelector('.equals-key');
+equalsKey.addEventListener('click', () => pressEquals());
 
 
 populateDisplay('0');
 
-// TODO: Add keyboard support
-function keyboardInput(e) {
-  // code
+const numberCharacters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+const operatorCharacters = ['+', '-', '*', '/'];
+const equalsCharacter = '=';
+const pointCharacter = '.';
+
+function pressOperator(str) {
+  if (str === '/') str = '÷';
+  else if (str === '*') str = '×';
+
+  if (input.length === 0 && displayValue.textContent === '0') {
+    if (str === '-') {
+      populateDisplay('-');
+    } else return;
+  } else if (input.length === 0 && displayValue.textContent !== '0') {
+    input[0] = displayValue.textContent;
+    operator = str;
+    populateDisplay(str);
+  } else if (input.length === 1) {
+    if ((operator === '÷' || operator === '×') && str === '-') {
+      if (displayValue.textContent[displayValue.textContent.length - 1] !== '-') {
+        populateDisplay('-');
+      } else return;
+    }
+    else if (operator) {
+      let operatorIndex = displayValue.textContent.indexOf(operator);
+      if (operatorIndex === displayValue.textContent.length - 1) {
+        deleteFromDisplay();
+        operator = str;
+        populateDisplay(operator);
+      } else if (operatorIndex < displayValue.textContent.length - 1) {
+        input[1] = displayValue.textContent.slice(operatorIndex + 1);
+        operate(...input, operator);
+        input[0] = displayValue.textContent;
+        operator = str;
+        populateDisplay(operator);
+      }
+    } else {
+      operator = str;
+      populateDisplay(operator);
+    }
+  }
 }
 
-window.addEventListener('keydown', (e) => keyboardInput());
+
+// TODO: Add keyboard support
+function keyboardInput(e) {
+  if (e.key === equalsCharacter || e.code === 'Enter') {
+    pressEquals();
+  }
+  else if (e.code === 'Backspace') {
+    deleteFromDisplay();
+  }
+  else if (e.key === pointCharacter) {
+    pressPoint();
+  }
+  else if (numberCharacters.includes(e.key)) {
+    populateDisplay(e.key);
+  }
+  else if (operatorCharacters.includes(e.key)) {
+    pressOperator(e.key);
+  }
+}
+
+window.addEventListener('keydown', (e) => keyboardInput(e));
