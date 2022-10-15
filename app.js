@@ -45,12 +45,10 @@ function operate(num1, num2, sign) {
   }
     
   if (!Number.isInteger(result)) {
-    result = result.toFixed(3);
-    let strResult = result.toString();
-    while (strResult[strResult.length - 1] === '0') {
-      strResult.slice(0, -1);
+    result = result.toFixed(5);
+    while (result[result.length - 1] === '0') {
+      result = result.slice(0, -1);
     }
-    result = Number(strResult);
   }
   
   displayValue.textContent = result;
