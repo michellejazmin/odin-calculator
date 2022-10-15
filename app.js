@@ -54,17 +54,23 @@ function operate(num1, num2, sign) {
   displayValue.textContent = result;
   input.splice(0);
   operator = '';
+  finished = true;
 }
 
 
 const displayValue = document.getElementById('display-value');
 const input = [];
 let operator = '';
+let finished = false;
 
 
 function populateDisplay(str) {
-  if (displayValue.textContent === '0') displayValue.textContent = str;
+  if (displayValue.textContent === '0' || (displayValue.textContent !== '0' && input.length === 0 && finished)) {
+    displayValue.textContent = str;
+  }
   else displayValue.textContent += str;
+
+  finished = false;
 }
 
 function deleteFromDisplay() {
@@ -98,7 +104,9 @@ for (key of numberKeys) {
 
 const pointKey = document.querySelector('.point-key');
 pointKey.addEventListener('click', (e) => {
-  if (input.length === 0 || (input.length === 1 && !operator)) {
+  if (finished) {
+    populateDisplay('0.');
+  } else if (input.length === 0 || (input.length === 1 && !operator)) {
     if (!displayValue.textContent.includes('.')) {
       populateDisplay('.');
     } else return;
