@@ -223,6 +223,9 @@ function keyboardInput(e) {
   else if (e.code === 'Backspace') {
     deleteFromDisplay();
   }
+  else if (e.code === 'Escape') {
+    clearDisplay();
+  }
   else if (e.key === pointCharacter) {
     pressPoint();
   }
