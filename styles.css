@@ -91,6 +91,10 @@ body {
   border-radius: 20px;
 }
 
+.key:hover {
+  box-shadow: 0.2em 0.2em 0.6em rgba(167, 167, 167, 0.3);
+}
+
 .big-key {
   width: 50%;
   height: 100%;
