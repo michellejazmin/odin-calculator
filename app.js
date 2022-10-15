@@ -96,9 +96,20 @@ for (key of numberKeys) {
   key.addEventListener('click', (e) => populateDisplay(e.target.id));
 }
 
-// TODO: point button functionality
 const pointKey = document.querySelector('.point-key');
-pointKey.addEventListener('click', (e) => populateDisplay(e.target.textContent));
+pointKey.addEventListener('click', (e) => {
+  if (input.length === 0 || (input.length === 1 && !operator)) {
+    if (!displayValue.textContent.includes('.')) {
+      populateDisplay('.');
+    } else return;
+  } else if (input.length === 1 && operator) {
+      let operatorIndex = displayValue.textContent.indexOf(operator);
+      let operand = displayValue.textContent.slice(operatorIndex + 1);
+      if (!operand.includes('.')) {
+        populateDisplay('.');
+      } else return;
+  }
+});
 
 const operatorKeys = document.getElementsByClassName('operator-key');
 for (key of operatorKeys) {
