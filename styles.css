@@ -46,6 +46,7 @@ body {
   font-size: 3rem;
   text-align: right;
   background-color: #eaeff9;
+  overflow: hidden;
 }
 
 #keys-container {
