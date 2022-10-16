@@ -217,7 +217,7 @@ function pressOperator(str) {
 
 
 function keyboardInput(e) {
-  if (e.key === equalsCharacter || e.code === 'Enter') {
+  if (e.key === equalsCharacter || e.code === 'Enter' ||e.code === 'NumpadEnter' ) {
     pressEquals();
   }
   else if (e.code === 'Backspace') {
