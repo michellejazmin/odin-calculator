@@ -164,6 +164,8 @@ for (key of operatorKeys) {
 function pressEquals() {
   if (input.length === 0 || operator === '') return;
   let operatorIndex = displayValue.textContent.indexOf(operator, input[0].length);
+  if (displayValue.textContent.length === operatorIndex + 2
+      && displayValue.textContent[displayValue.textContent.length -1] === '-') return;
   input[1] = displayValue.textContent.slice(operatorIndex + 1);
   operate(...input, operator);
 }
