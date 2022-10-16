@@ -95,6 +95,10 @@ body {
   box-shadow: 0.2em 0.2em 0.6em rgba(167, 167, 167, 0.3);
 }
 
+.key:active {
+  box-shadow: 0 0 0.4em rgb(167, 167, 167, 20%) inset;
+}
+
 .big-key {
   width: 50%;
   height: 100%;
